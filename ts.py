@@ -1,4 +1,3 @@
-python3 << 'EOF' | redis-cli --pipe
 import sys
 import random
 import os
@@ -72,5 +71,3 @@ for symbol in symbols:
 
 if batch:
     emit("TS.MADD", *batch)
-
-EOF
