@@ -1,6 +1,7 @@
 import sys
 import random
 import os
+from datetime import date, datetime, time
 
 # -----------------------
 # Configurable parameters (env override)
@@ -22,6 +23,8 @@ risks = [f"0.{i:02d}" for i in range(1, num_risks + 1)]
 
 num_days = 5040
 day_ms = 24 * 60 * 60 * 1000
+start_date = date.today()
+start_ms = int(datetime.combine(start_date, time.min).timestamp() * 1000)
 points_per_madd = 5000
 
 out = sys.stdout.buffer
@@ -60,7 +63,7 @@ for symbol in symbols:
             key = f"{{{symbol}}}:{tenor}:{risk}"
 
             for d in range(num_days):
-                ts = d * day_ms
+                ts = start_ms + d * day_ms
                 val = f"{random.uniform(0.1, 0.9):.6f}"
 
                 batch.extend([key, str(ts), val])
